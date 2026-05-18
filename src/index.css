@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #1c1917;
+  --color-ink-muted: #78716c;
+  --color-cream: #faf8f5;
+  --color-cream-dark: #e7e0d5;
+  --color-gold: #a67c00;
+  --color-gold-light: #c9a227;
+  --color-gold-glow: #e4c76a;
+  --color-plum: #3d2a5c;
+  --color-plum-deep: #1a1028;
+  --color-plum-light: #5c4178;
+}
+
+@layer base {
+  body {
+    @apply min-h-screen bg-cream font-sans text-ink antialiased;
+  }
+
+  input[type="date"] {
+    color-scheme: light;
+  }
+}
