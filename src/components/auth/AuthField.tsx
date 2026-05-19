@@ -12,10 +12,10 @@ type AuthFieldProps = {
 };
 
 const fieldClassName =
-  "w-full rounded-xl border border-cream-dark bg-cream/50 px-4 py-3 text-sm text-ink outline-none transition-all placeholder:text-ink-muted/60 focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/20";
+  "w-full rounded-xl border border-ivory-dark bg-ivory-warm/60 px-4 py-3 text-sm text-ink outline-none transition-all placeholder:text-ink-muted/60 focus:border-saffron focus:bg-white focus:ring-2 focus:ring-saffron/20";
 
 const labelClassName =
-  "mb-1.5 block text-xs font-semibold tracking-wide text-ink-muted uppercase";
+  "mb-1.5 block text-xs font-semibold tracking-wide text-ruby-deep/80 uppercase";
 
 const AuthField = ({
   label,

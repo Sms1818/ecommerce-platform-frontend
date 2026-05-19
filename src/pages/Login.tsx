@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { loginUser } from "../api/authApi";
-import type { LoginRequest } from "../types/auth";
-import AuthLayout from "../components/auth/AuthLayout";
-import AuthField from "../components/auth/AuthField";
 import AuthButton from "../components/auth/AuthButton";
+import AuthField from "../components/auth/AuthField";
+import AuthLayout from "../components/auth/AuthLayout";
+import type { LoginRequest } from "../types/auth";
 
 const Login = () => {
   const [formData, setFormData] = useState<LoginRequest>({
@@ -42,7 +42,7 @@ const Login = () => {
   return (
     <AuthLayout
       title="Welcome back"
-      subtitle="Sign in to continue your curated shopping experience."
+      subtitle="Sign in and continue exploring our vibrant marketplace."
       footerText="Don't have an account?"
       footerLinkText="Create one"
       footerLinkTo="/signup"

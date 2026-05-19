@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { signupUser } from "../api/authApi";
-import type { SignUpRequest } from "../types/auth";
-import AuthLayout from "../components/auth/AuthLayout";
-import AuthField from "../components/auth/AuthField";
 import AuthButton from "../components/auth/AuthButton";
+import AuthField from "../components/auth/AuthField";
+import AuthLayout from "../components/auth/AuthLayout";
+import type { SignUpRequest } from "../types/auth";
 
 const Signup = () => {
   const [formData, setFormData] = useState<SignUpRequest>({
@@ -48,8 +48,8 @@ const Signup = () => {
   return (
     <AuthLayout
       wide
-      title="Join Luxe"
-      subtitle="Create your account and unlock access to our premium collections."
+      title="Join the bazaar"
+      subtitle="Create your account and discover handpicked collections from across India."
       footerText="Already have an account?"
       footerLinkText="Sign in"
       footerLinkTo="/login"
@@ -103,7 +103,7 @@ const Signup = () => {
           <AuthField
             label="Phone"
             name="phoneNumber"
-            placeholder="+1 555 000 0000"
+            placeholder="+91 98765 43210"
             value={formData.phoneNumber}
             onChange={handleChange}
           />
