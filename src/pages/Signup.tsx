@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { signupUser } from "../api/authApi";
 import AuthButton from "../components/auth/AuthButton";
 import AuthField from "../components/auth/AuthField";
 import AuthLayout from "../components/auth/AuthLayout";
+import { useAuth } from "../context/AuthContext";
 import type { SignUpRequest } from "../types/auth";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState<SignUpRequest>({
     firstName: "",
     lastName: "",
@@ -18,9 +22,12 @@ const Signup = () => {
     profileImageUrl: "",
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -32,14 +39,17 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     try {
       const response = await signupUser(formData);
-      console.log(response);
-      alert("Signup successful");
-    } catch (error) {
-      console.error(error);
-      alert("Signup failed");
+      login({
+        response: response.response,
+        token: response.token ?? null,
+      });
+      navigate("/dashboard");
+    } catch {
+      setError("Could not create account. Check your details and try again.");
     } finally {
       setLoading(false);
     }
@@ -55,6 +65,12 @@ const Signup = () => {
       footerLinkTo="/login"
     >
       <form onSubmit={handleSubmit} className="space-y-5">
+        {error ? (
+          <p className="rounded-lg border border-ruby/20 bg-ruby/5 px-4 py-3 text-sm text-ruby-deep">
+            {error}
+          </p>
+        ) : null}
+
         <div className="grid gap-5 sm:grid-cols-2">
           <AuthField
             label="First name"

@@ -1,19 +1,26 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authApi";
 import AuthButton from "../components/auth/AuthButton";
 import AuthField from "../components/auth/AuthField";
 import AuthLayout from "../components/auth/AuthLayout";
+import { useAuth } from "../context/AuthContext";
 import type { LoginRequest } from "../types/auth";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState<LoginRequest>({
     emailOrUsername: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
 
@@ -26,14 +33,17 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     try {
       const response = await loginUser(formData);
-      console.log(response);
-      alert("Login successful");
-    } catch (error) {
-      console.error(error);
-      alert("Login failed");
+      login({
+        response: response.response,
+        token: response.token ?? null,
+      });
+      navigate("/dashboard");
+    } catch {
+      setError("Invalid email/username or password.");
     } finally {
       setLoading(false);
     }
@@ -48,6 +58,12 @@ const Login = () => {
       footerLinkTo="/signup"
     >
       <form onSubmit={handleSubmit} className="space-y-5">
+        {error ? (
+          <p className="rounded-lg border border-ruby/20 bg-ruby/5 px-4 py-3 text-sm text-ruby-deep">
+            {error}
+          </p>
+        ) : null}
+
         <AuthField
           label="Email or username"
           name="emailOrUsername"
